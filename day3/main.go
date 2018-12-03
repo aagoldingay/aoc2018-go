@@ -57,47 +57,45 @@ func testInput() []claim {
 
 func main() {
 	claims := readInput()
-	//claims := testInput()
-	fmt.Println(part1(claims))
+	// claims := testInput()
+	fmt.Println(parts(claims))
 }
 
-func part1(claims []claim) int {
-	fmt.Printf("claims: %v\n", claims)
+func parts(claims []claim) int {
+	//part 1
 	overlaps := make(map[coord]int)
-	fabric := [][]int{}
-
-	for i := 0; i < 8; i++ { // change to 1000 for real thing
-		fabric = append(fabric, make([]int, 8)) //change to 1000 for real thing
-	}
-	fmt.Printf("len : %v\n", len(fabric))
-	fmt.Printf("width : %v\n", len(fabric[0]))
+	fabric := make(map[coord]int)
 
 	for _, c := range claims {
-		fmt.Printf("claim : %v\n", c)
-		for i := c.fromTop; i < c.height+1; i++ {
-			for j := c.fromLeft; j < c.width+1; j++ {
-				fmt.Printf("coord : xy(%v , %v)\n", i, j)
-				if fabric[i][j] > 0 {
-					overlaps[coord{j, i}]++
+		for i := 0; i < c.height; i++ {
+			for j := 0; j < c.width; j++ {
+				cd := coord{i + c.fromTop, j + c.fromLeft}
+				if _, prs := fabric[cd]; prs {
+					overlaps[cd]++
+					fabric[cd] = -1
+					continue
 				}
-				fabric[i][j] = c.claimID
+				fabric[cd] = c.claimID
 			}
 		}
 	}
-	fmt.Println(overlaps)
+
+	//part 2
+	for _, c := range claims {
+		area := c.height * c.width
+		var currentArea int
+
+		for _, id := range fabric {
+			if id == c.claimID {
+				currentArea++
+			}
+		}
+
+		if currentArea == area {
+			fmt.Printf("claim id: %v\n", c.claimID)
+		}
+	}
+
+	//returns part 1 answer
 	return len(overlaps)
-	// some data structure
-
-	// to draw
-	// #123 @3,2: 5x4
-	// 3 in from left 	, 	2 down from top
-	// [j]				,	[i]
-	// i := 2; i < 4; i++
-	// 		j := 3; j < 5; j++
-	//		add claim number
-	//
-
-	// if hasNumber { 'X' }
-	// 		var++
-	//output var
 }
