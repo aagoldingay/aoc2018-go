@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -23,19 +24,23 @@ func readInput() []claim {
 	defer f.Close()
 
 	s := bufio.NewScanner(f)
-	//claims := []claim{}
+	claims := []claim{}
 
-	s.Scan()
-	fmt.Printf("output : %v\n", strings.Fields(s.Text()))
+	for s.Scan() {
+		info := strings.Fields(s.Text())
+		id, _ := strconv.Atoi(info[0][1:])
 
-	// for s.Scan() {
-	// 	row := s.Text()
+		coords := strings.Split(info[2][:len(info[2])-1], ",")
+		dimensions := strings.Split(info[3], "x")
 
-	// 	// boxes = append(boxes, row)
-	// }
+		coordLeft, _ := strconv.Atoi(coords[0])
+		coordTop, _ := strconv.Atoi(coords[1])
+		width, _ := strconv.Atoi(dimensions[0])
+		height, _ := strconv.Atoi(dimensions[1])
+		claims = append(claims, claim{id, coordLeft, coordTop, width, height})
+	}
 
-	// return claims
-	return []claim{}
+	return claims
 }
 
 func testInput() []claim {
