@@ -58,8 +58,7 @@ func testInput() []claim {
 func main() {
 	claims := readInput()
 	//claims := testInput()
-	fmt.Println(claims)
-	//fmt.Println(part1(claims))
+	fmt.Println(part1(claims))
 }
 
 func part1(claims []claim) int {
