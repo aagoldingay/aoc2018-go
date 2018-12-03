@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type claim struct {
@@ -22,14 +23,19 @@ func readInput() []claim {
 	defer f.Close()
 
 	s := bufio.NewScanner(f)
-	claims := []claim{}
+	//claims := []claim{}
 
-	for s.Scan() {
-		// row := s.Text()
-		// boxes = append(boxes, row)
-	}
+	s.Scan()
+	fmt.Printf("output : %v\n", strings.Fields(s.Text()))
 
-	return claims
+	// for s.Scan() {
+	// 	row := s.Text()
+
+	// 	// boxes = append(boxes, row)
+	// }
+
+	// return claims
+	return []claim{}
 }
 
 func testInput() []claim {
@@ -45,9 +51,10 @@ func testInput() []claim {
 }
 
 func main() {
-	//claims := readInput()
-	claims := testInput()
-	fmt.Println(part1(claims))
+	claims := readInput()
+	//claims := testInput()
+	fmt.Println(claims)
+	//fmt.Println(part1(claims))
 }
 
 func part1(claims []claim) int {
