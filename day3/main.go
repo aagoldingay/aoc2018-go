@@ -51,6 +51,7 @@ func main() {
 }
 
 func part1(claims []claim) int {
+	fmt.Printf("claims: %v\n", claims)
 	overlaps := make(map[coord]int)
 	fabric := [][]int{}
 
@@ -61,8 +62,9 @@ func part1(claims []claim) int {
 	fmt.Printf("width : %v\n", len(fabric[0]))
 
 	for _, c := range claims {
+		fmt.Printf("claim : %v\n", c.claimID)
 		for i := c.fromTop; i < c.height; i++ {
-			for j := c.fromLeft; i < c.width; j++ {
+			for j := c.fromLeft; j < c.width; j++ {
 				fmt.Printf("coord : xy(%v , %v)\n", i, j)
 				if fabric[i][j] > 0 {
 					overlaps[coord{j, i}]++
@@ -71,7 +73,7 @@ func part1(claims []claim) int {
 			}
 		}
 	}
-
+	fmt.Println(overlaps)
 	return len(overlaps)
 	// some data structure
 
